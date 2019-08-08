@@ -10,6 +10,17 @@ function App() {
   const [strikeCount, setStrikeCount] = useState(0);
   const [foulCount, setFoulCount] = useState(0);
 
+  const [inningCount, setInningCount] = useState(0);
+  const [bases, setBases] = useState([0,0,0]);
+  //[0] = base1
+  //[1] = base2
+  //[2] = base3
+  const [score, setScore] = useState([0,0,0,0]);
+  //[0] = hits
+  //[1] = doubles
+  //[2] = triples
+  //[3] = home runs
+
   const actions = {
     strike: () => {
       setStrikeCount(strikeCount + 1);
