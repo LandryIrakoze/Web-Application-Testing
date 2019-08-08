@@ -1,24 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
+import Dashboard from './components/Dashboard';
+import Display from './components/Display';
+
 import './App.css';
 
 function App() {
+  const [ballCount, setballCount] = useState(0);
+  const [strikeCount, setStrikeCount] = useState(0);
+  const [foulCount, setFoulCount] = useState(0);
+
+  const actions = {
+    strike: () => {
+      setStrikeCount(strikeCount + 1);
+      if(strikeCount === 2) {
+        setStrikeCount(0);
+        setballCount(0);
+      }
+    },
+    ball: () => {
+      setballCount(ballCount + 1);
+      if(ballCount === 3) {
+        setballCount(0);
+        setStrikeCount(0);
+      }
+    },
+    foul: () => {
+      setFoulCount(foulCount + 1);
+      if(strikeCount === 0) {
+        setStrikeCount(1)
+      } else if (strikeCount === 1) {
+          setStrikeCount(2)
+      } else if (strikeCount === 2) {
+          setStrikeCount(2);
+      };
+      if(foulCount === 3) {
+        setFoulCount(0)
+      }
+    },
+    hit: () => {
+      setballCount(0);
+      setStrikeCount(0);
+    },
+  }
+
+  const gameStats = {
+    ballScore: ballCount,
+    strikesScore: strikeCount
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Display stats={gameStats} />
+      <Dashboard increment={actions} />
     </div>
   );
 }
